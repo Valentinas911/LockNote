@@ -8,20 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		52CE2E0D209DB3C0003A58E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE2E0C209DB3C0003A58E9 /* AppDelegate.swift */; };
-		52CE2E0F209DB3C0003A58E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE2E0E209DB3C0003A58E9 /* ViewController.swift */; };
+		52CE2E0F209DB3C0003A58E9 /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE2E0E209DB3C0003A58E9 /* NoteVC.swift */; };
 		52CE2E12209DB3C0003A58E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52CE2E10209DB3C0003A58E9 /* Main.storyboard */; };
 		52CE2E14209DB3C1003A58E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52CE2E13209DB3C1003A58E9 /* Assets.xcassets */; };
 		52CE2E17209DB3C1003A58E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52CE2E15209DB3C1003A58E9 /* LaunchScreen.storyboard */; };
+		52CE2E24209DB4A9003A58E9 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE2E23209DB4A9003A58E9 /* NoteCell.swift */; };
+		52CE2E26209DB5CD003A58E9 /* NoteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CE2E25209DB5CD003A58E9 /* NoteDetailVC.swift */; };
+		52E704CE20AD3A1F00DD03D0 /* LockNote.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52E704CC20AD3A1F00DD03D0 /* LockNote.xcdatamodeld */; };
+		52E704D120AD3BD900DD03D0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E704D020AD3BD900DD03D0 /* CoreDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		52CE2E09209DB3C0003A58E9 /* LockNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LockNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52CE2E0C209DB3C0003A58E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		52CE2E0E209DB3C0003A58E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52CE2E0E209DB3C0003A58E9 /* NoteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
 		52CE2E11209DB3C0003A58E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52CE2E13209DB3C1003A58E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52CE2E16209DB3C1003A58E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52CE2E18209DB3C1003A58E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52CE2E23209DB4A9003A58E9 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		52CE2E25209DB5CD003A58E9 /* NoteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailVC.swift; sourceTree = "<group>"; };
+		52E704CD20AD3A1F00DD03D0 /* LockNote.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LockNote.xcdatamodel; sourceTree = "<group>"; };
+		52E704D020AD3BD900DD03D0 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,50 @@
 		52CE2E0B209DB3C0003A58E9 /* LockNote */ = {
 			isa = PBXGroup;
 			children = (
-				52CE2E0C209DB3C0003A58E9 /* AppDelegate.swift */,
-				52CE2E0E209DB3C0003A58E9 /* ViewController.swift */,
+				52E704CF20AD3BCF00DD03D0 /* Service */,
+				52CE2E20209DB3E9003A58E9 /* Model */,
+				52CE2E1F209DB3E5003A58E9 /* View */,
+				52CE2E1E209DB3DD003A58E9 /* Controller */,
 				52CE2E10209DB3C0003A58E9 /* Main.storyboard */,
+				52CE2E0C209DB3C0003A58E9 /* AppDelegate.swift */,
 				52CE2E13209DB3C1003A58E9 /* Assets.xcassets */,
 				52CE2E15209DB3C1003A58E9 /* LaunchScreen.storyboard */,
 				52CE2E18209DB3C1003A58E9 /* Info.plist */,
 			);
 			path = LockNote;
+			sourceTree = "<group>";
+		};
+		52CE2E1E209DB3DD003A58E9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				52CE2E0E209DB3C0003A58E9 /* NoteVC.swift */,
+				52CE2E25209DB5CD003A58E9 /* NoteDetailVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		52CE2E1F209DB3E5003A58E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				52CE2E23209DB4A9003A58E9 /* NoteCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		52CE2E20209DB3E9003A58E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				52E704CC20AD3A1F00DD03D0 /* LockNote.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		52E704CF20AD3BCF00DD03D0 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				52E704D020AD3BD900DD03D0 /* CoreDataService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +179,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52CE2E0F209DB3C0003A58E9 /* ViewController.swift in Sources */,
+				52E704CE20AD3A1F00DD03D0 /* LockNote.xcdatamodeld in Sources */,
+				52CE2E24209DB4A9003A58E9 /* NoteCell.swift in Sources */,
+				52CE2E0F209DB3C0003A58E9 /* NoteVC.swift in Sources */,
 				52CE2E0D209DB3C0003A58E9 /* AppDelegate.swift in Sources */,
+				52E704D120AD3BD900DD03D0 /* CoreDataService.swift in Sources */,
+				52CE2E26209DB5CD003A58E9 /* NoteDetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +382,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		52E704CC20AD3A1F00DD03D0 /* LockNote.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				52E704CD20AD3A1F00DD03D0 /* LockNote.xcdatamodel */,
+			);
+			currentVersion = 52E704CD20AD3A1F00DD03D0 /* LockNote.xcdatamodel */;
+			path = LockNote.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52CE2E01209DB3C0003A58E9 /* Project object */;
 }
