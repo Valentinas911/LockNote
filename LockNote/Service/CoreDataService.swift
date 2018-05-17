@@ -13,9 +13,8 @@ class CoreDataService {
     
     static let instance = CoreDataService()
     
-    public var context: NSManagedObjectContext?
-    
-    lazy var persistentContainer: NSPersistentContainer = {
+    private(set) public var context: NSManagedObjectContext!
+    private lazy var persistentContainer: NSPersistentContainer = {
 
         let container = NSPersistentContainer(name: "LockNote")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -27,11 +26,10 @@ class CoreDataService {
     }()
     
     private init() {
-        context = persistentContainer.viewContext
+        self.context = persistentContainer.viewContext
     }
     
     func saveContext () {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()

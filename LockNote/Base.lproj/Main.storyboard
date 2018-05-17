@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +33,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REc-Sk-0G5">
                                                     <rect key="frame" x="31" y="19" width="280" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -87,7 +88,7 @@
             </objects>
             <point key="canvasLocation" x="900" y="-170.46476761619192"/>
         </scene>
-        <!--Note DetailVC-->
+        <!--Note-->
         <scene sceneID="zyR-Em-GdJ">
             <objects>
                 <viewController storyboardIdentifier="NoteDetailVC" id="AMB-c4-FP1" customClass="NoteDetailVC" customModule="LockNote" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,38 +96,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exY-GX-YHI">
-                                <rect key="frame" x="20" y="607" width="335" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ovj-Ol-eqg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
-                                <state key="normal" title="LOCK THIS NOTE">
-                                    <color key="titleColor" red="0.96470588239999999" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="lockButtonPressed:" destination="AMB-c4-FP1" eventType="touchUpInside" id="yuz-NS-6FY"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="veY-f2-yAW">
-                                <rect key="frame" x="15" y="84" width="345" height="503"/>
+                                <rect key="frame" x="15" y="84" width="345" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="exY-GX-YHI" firstAttribute="top" secondItem="veY-f2-yAW" secondAttribute="bottom" constant="20" id="3Ar-dQ-geW"/>
                             <constraint firstItem="veY-f2-yAW" firstAttribute="leading" secondItem="2fH-Fz-v6k" secondAttribute="leading" constant="15" id="3HJ-s6-7xV"/>
-                            <constraint firstItem="2fH-Fz-v6k" firstAttribute="bottom" secondItem="exY-GX-YHI" secondAttribute="bottom" constant="20" id="YeB-aV-jnw"/>
                             <constraint firstItem="veY-f2-yAW" firstAttribute="top" secondItem="2fH-Fz-v6k" secondAttribute="top" constant="20" id="bGq-5z-TL4"/>
-                            <constraint firstItem="exY-GX-YHI" firstAttribute="leading" secondItem="2fH-Fz-v6k" secondAttribute="leading" constant="20" id="cU8-jg-Z63"/>
-                            <constraint firstItem="2fH-Fz-v6k" firstAttribute="trailing" secondItem="exY-GX-YHI" secondAttribute="trailing" constant="20" id="fQc-Gi-TFc"/>
+                            <constraint firstItem="2fH-Fz-v6k" firstAttribute="bottom" secondItem="veY-f2-yAW" secondAttribute="bottom" constant="20" id="ibe-9d-5pa"/>
                             <constraint firstItem="2fH-Fz-v6k" firstAttribute="trailing" secondItem="veY-f2-yAW" secondAttribute="trailing" constant="15" id="m6f-SW-LBd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2fH-Fz-v6k"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Note" id="xE6-Ap-ssF">
+                        <rightBarButtonItems>
+                            <barButtonItem style="done" systemItem="save" id="dmQ-Y4-uDq">
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="AMB-c4-FP1" id="MnV-0c-CGj"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="lockImage" id="TUC-hj-zob">
+                                <connections>
+                                    <action selector="lockButtonPressed:" destination="AMB-c4-FP1" id="QWH-Wz-UlJ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="messageText" destination="veY-f2-yAW" id="Lgr-ca-zam"/>
                     </connections>

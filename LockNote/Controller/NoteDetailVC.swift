@@ -17,28 +17,55 @@ class NoteDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    }
-    
-    func configureNote(note: Note?) {
-        if note != nil {
-            selectedNote = note
+        messageText.delegate = self
+        
+        if selectedNote != nil {
             messageText.text = selectedNote?.message
+        } else {
+            messageText.text = "Note down your thoughts here..."
         }
+        
     }
     
-    @IBAction func lockButtonPressed(_ sender: Any) {
+    @IBAction fileprivate func saveButtonPressed(_ sender: Any) {
+        saveNote(andLock: false)
+    }
+    
+    
+    @IBAction fileprivate func lockButtonPressed(_ sender: Any) {
+        saveNote(andLock: true)
+    }
+    
+    fileprivate func saveNote(andLock lock: Bool) {
+        var note: Note?
         
-        guard let note = selectedNote else { return }
-        
-        if note.isLocked {
-            note.isLocked = false
+        if selectedNote != nil {
+            note = selectedNote
         } else {
-            note.isLocked = true
+            note = Note(context: CoreDataService.instance.context)
         }
+        
+        note?.dateCreated = NSDate() as Date
+        note?.message = messageText.text
+        note?.isLocked = lock
         
         CoreDataService.instance.saveContext()
-        
         navigationController?.popViewController(animated: true)
+    }
+
+}
+
+extension NoteDetailVC: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if selectedNote == nil {
+            textView.text = ""
+        }
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        return true
     }
     
 }

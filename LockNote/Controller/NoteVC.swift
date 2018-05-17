@@ -30,13 +30,13 @@ class NoteVC: UIViewController {
         tableView.reloadData()
     }
     
-    @IBAction func addNoteButtonPressed(_ sender: Any) {
-        
+    @IBAction fileprivate func addNoteButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "showNoteDetail", sender: nil)
     }
     
     fileprivate func fetchNotes() {
         
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Note.fetchRequest()
+        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "dateCreated", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -47,7 +47,7 @@ class NoteVC: UIViewController {
                                                 cacheName: nil)
         controller.delegate = self
         
-        self.controller = controller as! NSFetchedResultsController<Note>
+        self.controller = controller 
         
         do {
             try controller.performFetch()
@@ -55,6 +55,16 @@ class NoteVC: UIViewController {
             debugPrint(error.localizedDescription)
         }
         
+    }
+    
+    fileprivate func showAlert(message: String) {
+        let alertVC = UIAlertController(title: "Error",
+                                        message: message,
+                                        preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(action)
+        present(alertVC, animated: true, completion: nil)
     }
     
     fileprivate func authenticateBiometrics(completion: @escaping (Bool) -> Void) {
@@ -86,26 +96,63 @@ class NoteVC: UIViewController {
         
     }
     
-    fileprivate func showAlert(message: String) {
-        let alertVC = UIAlertController(title: "Error",
-                                        message: message,
-                                        preferredStyle: .alert)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else { return }
+        guard let destination = segue.destination as? NoteDetailVC else { return }
         
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertVC.addAction(action)
-        present(alertVC, animated: true, completion: nil)
-    }
-    
-    fileprivate func pushNoteFor(indexPath: IndexPath) {
-        guard let noteDetailVC = storyboard?.instantiateViewController(withIdentifier: "NoteDetailVC") as? NoteDetailVC else { return }
-        noteDetailVC.configureNote(note: controller.object(at: indexPath))
-        navigationController?.pushViewController(noteDetailVC, animated: true)
+        if identifier == "showNoteDetail" {
+            if let note = sender as? Note {
+                destination.selectedNote = note
+            }
+        }
     }
     
 }
 
 extension NoteVC: NSFetchedResultsControllerDelegate {
-    
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch(type) {
+            
+        case.insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            break
+            
+        case.update:
+            if let indexPath = indexPath {
+                let cell = tableView.cellForRow(at: indexPath) as! NoteCell
+                let note = controller.object(at: indexPath) as! Note
+                cell.configureCell(note: note)
+                
+            }
+            break
+            
+        case.delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break
+            
+        case.move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+        }
+        
+    }
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
 }
 
 extension NoteVC: UITableViewDelegate, UITableViewDataSource {
@@ -128,25 +175,21 @@ extension NoteVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let note = controller.object(at: indexPath)
         
-        if controller.object(at: indexPath).isLocked {
+        if note.isLocked {
             authenticateBiometrics { (authenticated) in
                 if authenticated {
-                    CoreDataService.instance.unlockNote(note: self.controller.object(at: indexPath))
+                    CoreDataService.instance.unlockNote(note: note)
                     DispatchQueue.main.async {
-                        self.pushNoteFor(indexPath: indexPath)
+                        self.performSegue(withIdentifier: "showNoteDetail", sender: note)
                     }
                     
                 }
             }
         } else {
-            pushNoteFor(indexPath: indexPath)
+            performSegue(withIdentifier: "showNoteDetail", sender: note)
         }
         
-
-        
     }
-    
-    
-    
 }
